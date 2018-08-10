@@ -1,0 +1,39 @@
+/**
+ * These .proto interfaces are private and stable.
+ */
+
+option java_package = "com.immomo.datainfo.ha.proto";
+option java_outer_classname = "ZKFCProtocolProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package avalon.common;
+
+message CedeActiveRequestProto {
+  required uint32 millisToCede = 1;
+}
+
+message CedeActiveResponseProto {
+}
+
+message GracefulFailoverRequestProto {
+}
+
+message GracefulFailoverResponseProto {
+}
+
+
+/**
+ * Protocol provides manual control of the ZK Failover Controllers
+ */
+service ZKFCProtocolService {
+  /**
+   * Request that the service cede its active state, and quit the election
+   * for some amount of time
+   */
+  rpc cedeActive(CedeActiveRequestProto)
+      returns(CedeActiveResponseProto);
+
+
+  rpc gracefulFailover(GracefulFailoverRequestProto)
+      returns(GracefulFailoverResponseProto);
+}

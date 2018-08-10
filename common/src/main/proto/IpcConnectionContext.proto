@@ -1,0 +1,20 @@
+/**
+ * These .proto interfaces are private and stable.
+ */
+
+option java_package = "com.immomo.datainfo.rpc.protobuf";
+option java_outer_classname = "IpcConnectionContextProtos";
+option java_generate_equals_and_hash = true;
+
+
+
+/**
+ * The connection context is sent as part of the connection establishment.
+ * It establishes the context for ALL Rpc calls within the connection.
+ */
+message IpcConnectionContextProto {
+
+  // Protocol name for next rpc layer.
+  // The client created a proxy with this protocol name
+  optional string protocol = 2;
+}

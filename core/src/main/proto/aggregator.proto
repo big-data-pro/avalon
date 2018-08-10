@@ -1,0 +1,50 @@
+/**
+ * These .proto interfaces are private and stable.
+ * for what changes are allowed for a *stable* .proto interface.
+ */
+
+option java_package = "com.immomo.datainfo.protocol";
+option java_outer_classname = "AggregatorProtocolProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package avalon.core;
+
+
+import "avalon.proto";
+
+/**
+ *
+ */
+message AggregatorMsgProto {
+    required string businessName = 1;
+    required StoreType storeType = 2 [default=HBASE];
+    required string msg = 3;
+    //todo
+}
+
+enum AggregatorStatus {
+    SUCCESS = 0;
+    FAILED = 1;
+}
+message AlarmRequestProto {
+    required AlarmProto alarmMsg = 1;
+}
+
+message AlarmResponseProto {
+    required AggregatorStatus result = 1;
+}
+
+message AggregatorStoreRequestProto {
+    required AggregatorMsgProto aggregatorMsg = 1;
+}
+
+message AggregatorStoreResponseProto {
+
+    required AggregatorStatus result = 1;
+}
+
+
+service AggregatorProtocol {
+    rpc store(AggregatorStoreRequestProto) returns(AggregatorStoreResponseProto);
+    rpc alarm(AlarmRequestProto) returns(AlarmResponseProto);
+}

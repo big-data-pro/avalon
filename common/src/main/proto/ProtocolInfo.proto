@@ -1,0 +1,69 @@
+/**
+ * These .proto interfaces are private and stable.
+ */
+
+option java_package = "com.immomo.datainfo.rpc.protobuf";
+option java_outer_classname = "ProtocolInfoProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package avalon.common;
+
+/**
+ * Request to get protocol versions for all supported rpc kinds.
+ */
+message GetProtocolVersionsRequestProto {
+  required string protocol = 1; // Protocol name
+}
+
+/**
+ * Protocol version with corresponding rpc kind.
+ */
+message ProtocolVersionProto {
+  required string rpcKind = 1; //RPC kind
+  repeated uint64 versions = 2; //Protocol version corresponding to the rpc kind.
+}
+
+/**
+ * Get protocol version response.
+ */
+message GetProtocolVersionsResponseProto { 
+  repeated ProtocolVersionProto protocolVersions = 1;
+}
+
+/**
+ * Get protocol signature request.
+ */
+message GetProtocolSignatureRequestProto {
+  required string protocol = 1; // Protocol name
+  required string rpcKind = 2; // RPC kind
+}
+
+/**
+ * Get protocol signature response.
+ */ 
+message GetProtocolSignatureResponseProto {
+  repeated ProtocolSignatureProto protocolSignature = 1;
+}
+
+message ProtocolSignatureProto {
+  required uint64 version = 1;
+  repeated uint32 methods = 2;
+}
+
+/**
+ * Protocol to get information about protocols.
+ */
+service ProtocolInfoService {
+  /**
+   * Return protocol version corresponding to protocol interface for each
+   * supported rpc kind.
+   */
+  rpc getProtocolVersions(GetProtocolVersionsRequestProto) 
+      returns (GetProtocolVersionsResponseProto);
+
+  /**
+   * Return protocol version corresponding to protocol interface.
+   */
+  rpc getProtocolSignature(GetProtocolSignatureRequestProto) 
+      returns (GetProtocolSignatureResponseProto);
+}

@@ -1,0 +1,67 @@
+/**
+ * These .proto interfaces are private and stable.
+ * for what changes are allowed for a *stable* .proto interface.
+ */
+
+option java_package = "com.immomo.datainfo.protocol";
+option java_outer_classname = "ClientProtocolProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package avalon.core;
+
+
+import "avalon.proto";
+
+/**
+ *
+ */
+
+message ListStatusRequestProto {
+    required string status = 1;     // status name
+}
+
+message ListStatusResponseProto {
+    repeated JobInfoProto jobInfos = 1;
+}
+
+message OpJobRequestProto {
+    required uint32 jobId = 1;     // job name
+}
+
+message OpJobResponseProto {
+
+}
+
+message GetJobRequestProto {
+    required string jobName = 1;
+}
+
+message GetJobResponseProto {
+    required string jobId = 2;
+}
+
+message RefreshServiceRequestProto {
+    required string serviceName = 1;
+}
+
+message RefreshServiceResponseProto {
+
+}
+
+message RefreshQueueRequestProto {
+    required string serviceName = 1;
+    required uint32 queueSize = 2;
+}
+
+message RefreshQueueResponseProto {
+
+}
+
+service AvalonProtocol {
+    rpc listStatus(ListStatusRequestProto) returns(ListStatusResponseProto);
+    rpc getJob(GetJobRequestProto) returns(GetJobResponseProto);
+    rpc killJob(OpJobRequestProto) returns(OpJobResponseProto);
+    rpc suspendJob(OpJobRequestProto) returns(OpJobResponseProto);
+    rpc resumeJob(OpJobRequestProto) returns(OpJobResponseProto);
+    rpc refreshService(RefreshServiceRequestProto) returns(RefreshServiceRequestProto);
+}

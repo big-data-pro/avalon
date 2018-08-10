@@ -1,0 +1,58 @@
+
+option java_package = "com.immomo.datainfo.rpc.protocol";
+option java_outer_classname = "TestProtos";
+option java_generic_services = true;
+option java_generate_equals_and_hash = true;
+package avalon.common;
+
+message EmptyRequestProto {
+}
+
+message EmptyResponseProto {
+}
+message SlowPingRequestProto {
+    required bool shouldSlow = 1;
+}
+message SlowPingResponseProto {
+
+}
+message SleepRequestProto {
+    required int64 delay = 1;
+}
+message SleepResponseProto {
+
+}
+
+message EchoRequestProto {
+    required string message = 1;
+}
+
+message EchoResponseProto {
+    required string message = 1;
+}
+
+message AddRequestProto {
+    required int32 v1 = 1;
+    required int32 v2 = 2;
+}
+
+message AddResponseProto {
+    required int32 value = 1;
+}
+
+message ExchangeRequestProto {
+    repeated int32 value = 1 [packed=true];
+}
+
+message ExchangeResponseProto {
+    repeated int32 value = 1 [packed=true];
+}
+
+service TestProtocolService {
+    rpc ping(EmptyRequestProto) returns(EmptyResponseProto) ;
+    rpc slowPing(SlowPingRequestProto) returns(SlowPingResponseProto);
+    rpc sleep(SleepRequestProto) returns (SleepResponseProto);
+    rpc echo(EchoRequestProto) returns (EchoResponseProto);
+    rpc add(AddRequestProto) returns (AddResponseProto);
+    rpc exchange(ExchangeRequestProto) returns(ExchangeResponseProto);
+}

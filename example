@@ -1,0 +1,62 @@
+jobconf
+{
+    "business": hdfs
+    ,"metrics": [
+        {
+            "name":heartbeat
+            ,"tag":metric_name
+            ,"alarm:" {
+                ,"alarmLevel":3
+                ,"isAlarm":true
+                ,"alarmType:":
+            }
+            ,"strategy:"  {
+                ,"class": $CompareBigger
+                ,"threadhold":4
+            }
+        }
+        ,{
+            "name":transition
+            ,"tag":metric_name
+            ,"alarm":{
+                ,"alarmLevel":
+                ,"isAlarm":false
+            }
+        }
+        ,{
+            "name":lost.datanode
+            ,"tag":metric_name
+            ,"alarm:" {
+                ,"alarmLevel":3
+                ,"isAlarm":true
+                ,"alarmType:":
+            }
+            ,"strategy:"  {
+                ,"class": $CompareNotNone
+                ,"threadhold":true
+            }
+        }
+        ,{
+            "name":active
+            ,"tag":metric_name
+            ,"alarm:" {
+                ,"alarmLevel":3
+                ,"isAlarm":true
+                ,"alarmType:":
+            }
+            ,"strategy:"  {
+                ,"class": $CompareNotEqual
+                ,"threadhold":true
+            }
+
+        }
+    ]
+    ,"start_time":***
+    ,"end_time": ****
+    ,"source_type": JMX
+    ,"source":
+    ,"interval": 3
+    ,"hasStore":true
+    ,"storeType":HBase
+    ,"storeTable":HDFS_METRIC
+}

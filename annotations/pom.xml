@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>avalon</artifactId>
+        <groupId>com.immomo.datainfo</groupId>
+        <version>1.0.0</version>
+        <relativePath>../../avalon</relativePath>
+    </parent>
+
+    <groupId>com.immomo.datainfo</groupId>
+    <artifactId>annotations</artifactId>
+    <version>1.0.0</version>
+    <description>MoMo Avalon Annotations</description>
+    <name>MoMo Avalon Annotations</name>
+    <packaging>jar</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>jdiff</groupId>
+            <artifactId>jdiff</artifactId>
+            <version>1.0.9</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>os.linux</id>
+            <activation>
+                <os>
+                    <family>!Mac</family>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>jdk.tools</groupId>
+                    <artifactId>jdk.tools</artifactId>
+                    <version>1.6</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>jdk1.7</id>
+            <activation>
+                <jdk>1.7</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>jdk.tools</groupId>
+                    <artifactId>jdk.tools</artifactId>
+                    <version>1.7</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>

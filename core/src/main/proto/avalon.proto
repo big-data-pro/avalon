@@ -1,0 +1,122 @@
+//syntax = "proto3";
+/** request and response PB*/
+option java_package = "com.immomo.datainfo.protocol";
+option java_outer_classname = "AvalonProtos";
+option java_generate_equals_and_hash = true;
+package avalon.core;
+
+
+/**
+ * AgentStatus report through heatbeat
+ */
+message AgentStatusProto {
+    required string agentName = 1;
+    required uint32 agentId = 2;
+    enum AgentStatus {
+        NONE = 0; //没收到状态
+        HEALTHY = 1; // 汇报状态
+        BUSY = 2; //
+        BAD = 3;
+    }
+    optional AgentStatus agentStatus = 4 [default=NONE];
+}
+
+/**
+ * JobStatus report through heatbeat
+*/
+message TaskStatusProto {
+    required uint32 jobId = 1;
+    required uint32 taskId = 2;
+    required string taskName = 3;
+    enum TaskStatus {
+        ACCEPTED = 0;
+        RUNNING = 1;
+        SUCCESSED = 2;
+        FAILED = 3;
+        KILLED = 4;
+    }
+    optional TaskStatus taskStatus = 5 [default=ACCEPTED];
+
+}
+
+message MetricProto {
+    required string metricName = 1;
+    required string metricTag = 2;
+    required bool isNeedAlarm = 3;
+}
+
+message StrategyRuleProto {
+    enum MethodType {
+        CMP_EQUAL = 0;
+        CMP_BIGGER = 1;
+        CMP_LOWER = 2;
+        CMP_NOTNONE = 3;
+    }
+    enum ValueType {
+        INT = 0;
+        STRING = 1;
+    }
+    required MethodType method = 1;
+    required ValueType value = 2;
+    required string cmpResult = 3;
+}
+
+message AlarmRuleProto {
+    enum AlarmLevel {
+        INFO = 0;
+        WARN = 1;
+        CRITICAL = 2;
+    }
+    enum AlarmType {
+        MSG = 0;
+        MAIL = 1;
+        PHONE = 2;
+    }
+    optional AlarmLevel alarmLevel = 1 [default=INFO];
+    optional AlarmType alarmType = 2 [default=MSG];
+}
+
+message AlarmProto {
+    required AlarmRuleProto alarmRule = 1;
+    required string alarmMsg = 3;
+    required string alarmHost = 4 ;
+    required uint32 timestamp = 5;
+}
+enum StoreType {
+    NONE = 0;
+    HBASE = 1;
+    MYSQL = 2;
+    REDIS = 3;
+    FILE = 4;
+}
+message JobConfigProto {
+
+    required string businessName = 1;
+    repeated MetricProto metrics = 2;
+    required bool isAlarm = 3 [default=false];
+    required AlarmRuleProto alarmRule = 4 ;
+    optional StrategyRuleProto strategyRule = 5 ;
+    required string startTime = 6;
+    required string endTime = 7;
+    required string sourceType = 8;
+    required string sourceValue = 10;
+    required string interval = 11;
+    required StoreType storeType = 12 [default=NONE];
+    optional string storeTable = 13 [default=""];
+    required string scriptLocation = 14;
+}
+
+message JobInfoProto {
+    enum JobStatus {
+        PREP = 0;
+        RUNNING = 1;
+        END = 2;
+        KILLED = 3;
+    }
+    required int32 jobId = 1;
+    required string jobName = 2;
+    required JobConfigProto jobConfig = 3;
+    required string owner = 4;
+    required JobStatus jobStatus = 5 [default=PREP];
+}
+
